@@ -7,7 +7,6 @@ import {
   IsPositive,
   IsString,
   MinLength,
-  ValidateIf,
 } from 'class-validator';
 
 export class CreateProductDto {
@@ -21,7 +20,6 @@ export class CreateProductDto {
   price?: number;
 
   @IsString()
-  @ValidateIf((o) => o.price === 99.99)
   @IsOptional()
   description?: string;
 
