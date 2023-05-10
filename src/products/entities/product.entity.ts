@@ -1,4 +1,10 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Product {
@@ -27,7 +33,17 @@ export class Product {
   gender: string;
 
   @BeforeInsert()
-  updateSlug() {
+  updateSlugInsert() {
+    const finalSlug = this.slug || this.title;
+
+    this.slug = finalSlug
+      .toLowerCase()
+      .replaceAll(' ', '_')
+      .replaceAll("'", '');
+  }
+
+  @BeforeUpdate()
+  updateSlugUpdate() {
     const finalSlug = this.slug || this.title;
 
     this.slug = finalSlug
